@@ -66,6 +66,7 @@ app.post('/pokemon', (req, response) => {
         // redirect to home page
         response.redirect('/');
       }
+      client.end();
     });
   });
 });
