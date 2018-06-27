@@ -5,7 +5,7 @@ For this exercise, we'll upgrade from storing pokedex data in a plain JSON file 
 ## Getting Started
 
 1.  Fork and clone this repository to your computer
-2.  Run `yarn install` to install dependencies
+2.  Run `npm install` to install dependencies
 3.  Create a new Postgres database by running `createdb pokemons -U <your_username>`
 4.  Run `psql -U <your_username> -d pokemons -a -f tables.sql` to create a `pokemon` table in the database
 5.  Seed data into the newly created `pokemon` table by running `psql -U <your_username> -d pokemons -a -f seed.sql` (Note: this will run 3 INSERT queries to seed 3 pokemon into the table.)
