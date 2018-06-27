@@ -15,26 +15,25 @@ const client = new pg.Client(configs);
 
 jsonfile.readFile(FILE, (err,obj)=>{
 	client.connect((err) => {
-	if (err) {
-		console.log('Connection error', err.message);
-	}
-	var counter=0;
-	console.log('Connected to dB');
+		if (err) {
+			console.log('Connection error', err.message);
+		}
 
-	let text = 'INSERT INTO pokemon (name, num, img, weight, height) ' + ' VALUES($1, $2, $3, $4, $5)';
+		console.log('Connected to dB');
 
-	for (let i=0; i<obj.pokemon.length; i++){
-		let values = [obj.pokemon[i].name, obj.pokemon[i].num, obj.pokemon[i].img, obj.pokemon[i].weight, obj.pokemon[i].height];
+		let text = 'INSERT INTO pokemon (name, num, img, weight, height) ' + ' VALUES($1, $2, $3, $4, $5) RETURNING *';
 
-		client.query(text, values, (err, res) => {
-			if (err) {
-				console.log("Query error", err.message);
-			} else {
-				console.log("Entry added " + counter);
-				counter++;
-			}
-			if (counter === obj.pokemon.length) {client.end();}
-		});
-	}	
-});
+		for (let i=0; i<obj.pokemon.length; i++){
+			let values = [obj.pokemon[i].name, obj.pokemon[i].num, obj.pokemon[i].img, obj.pokemon[i].weight, obj.pokemon[i].height];
+
+			client.query(text, values, (err, res) => {
+				if (err) {
+					console.log("Query error", err.message);
+				} else {
+					console.log("Entry added " + (i+1));
+				}
+				if (res.rows[0].id == 151) { client.end() };
+			});
+		}	
+	});
 });
