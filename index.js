@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const exphbs = require('express-handlebars');
 const { Client } = require('pg');
 
 // Initialise postgres client
@@ -10,10 +9,6 @@ const client = new Client({
   host: '127.0.0.1',
   database: 'pokemons',
   port: 5432,
-});
-
-client.connect((err) => {
-  if (err) console.log('connection error:', err.stack);
 });
 
 /**
@@ -29,10 +24,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 
-// Set handlebars to be the default view engine
-app.engine('handlebars', exphbs.create().engine);
-app.set('view engine', 'handlebars');
-
+// Set react-views to be the default view engine
+const reactEngine = require('express-react-views').createEngine();
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx');
+app.engine('jsx', reactEngine);
 
 /**
  * ===================================
