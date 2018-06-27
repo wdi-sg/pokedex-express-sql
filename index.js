@@ -13,7 +13,7 @@ const client = new Client({
 });
 
 client.connect((err) => {
-  if (err) console.error('connection error:', err.stack);
+  if (err) console.log('connection error:', err.stack);
 });
 
 /**
@@ -72,11 +72,9 @@ app.post('/pokemon', (req, response) => {
   const queryString = 'INSERT INTO pokemon(name, height) VALUES($1, $2)'
   const values = [params.name, params.height];
 
-  if (err) console.error('connection error:', err.stack);
-
   client.query(queryString, values, (err, res) => {
     if (err) {
-      console.error('query error:', err.stack);
+      console.log('query error:', err.stack);
     } else {
       console.log('query result:', res);
 
