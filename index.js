@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const { Client } = require('pg');
+const pg = require('pg');
 
 // Initialise postgres client
 const client = new Client({
@@ -9,6 +9,12 @@ const client = new Client({
   host: '127.0.0.1',
   database: 'pokemons',
   port: 5432,
+});
+
+const pool = new pg.Pool(configs);
+
+pool.on('error', function (err) {
+  console.log('idle client error', err.message, err.stack);
 });
 
 /**
@@ -43,7 +49,7 @@ app.get('/', (req, response) => {
   //
   const queryString = 'SELECT * from pokemon'
 
-  client.query(queryString, (err, result) => {
+  pool.query(queryString, (err, result) => {
     if (err) {
       console.error('query error:', err.stack);
     } else {
@@ -68,7 +74,7 @@ app.post('/pokemon', (req, response) => {
   const queryString = 'INSERT INTO pokemon(name, height) VALUES($1, $2)'
   const values = [params.name, params.height];
 
-  client.query(queryString, values, (err, res) => {
+  pool.query(queryString, values, (err, res) => {
     if (err) {
       console.log('query error:', err.stack);
     } else {
