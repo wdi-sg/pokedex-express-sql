@@ -17,13 +17,13 @@ For this exercise, we'll upgrade from storing pokedex data in a plain JSON file 
 The deliverable is an app that has CRUD functionality on pokemons.
 
 * GET `/` should return HTML page showing all pokemons currently in database (specifically in the pokemon table within the database)
-* GET `/:id` (eg. `/2`) should return HTML page showing information about pokemon with primary ID 2 (read: primary ID, not `num` property)
-* GET `/new` should return HTML page showing a form to create a new pokemon - upon submit, it should send POST request to `/`
-* POST `/` should create a new pokemon and insert a new entry in the pokemon table, and should redirect to the home page `/`
-* GET `/:id/edit` (eg. `/2/edit`) should return HTML page showing a form pre-populated with that pokemon's data - upon submit, it should send PUT request to `/:id`
-* The `/:id/edit` HTML page should also have a "Delete" button that when clicked, will send a DELETE request to `/:id` to delete the current pokemon
-* PUT `/:id` should update the data of the pokemon with the specified ID, and should redirect to the pokemon detail page `/:id`
-* DELETE `/:id` should delete the entry of the pokemon with the specified ID, and should redirect to the home page `/`
+* GET `/pokemon/:id` (eg. `/2`) should return HTML page showing information about pokemon with primary ID 2 (read: primary ID, not `num` property)
+* GET `/pokemon/new` should return HTML page showing a form to create a new pokemon - upon submit, it should send POST request to `/`
+* POST `/pokemon` should create a new pokemon and insert a new entry in the pokemon table, and should redirect to the home page `/`
+* GET `/pokemon/:id/edit` (eg. `/2/edit`) should return HTML page showing a form pre-populated with that pokemon's data - upon submit, it should send PUT request to `/:id`
+* The `/pokemon/:id/edit` HTML page should also have a "Delete" button that when clicked, will send a DELETE request to `/:id` to delete the current pokemon
+* PUT `/pokemon/:id` should update the data of the pokemon with the specified ID, and should redirect to the pokemon detail page `/:id`
+* DELETE `/pokemon/:id` should delete the entry of the pokemon with the specified ID, and should redirect to the home page `/`
 
 ## Useful SQL commands
 
