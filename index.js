@@ -4,7 +4,7 @@ const methodOverride = require('method-override');
 const pg = require('pg');
 
 // Initialise postgres client
-const client = new Client({
+const config = {
   user: 'akira',
   host: '127.0.0.1',
   database: 'pokemons',
