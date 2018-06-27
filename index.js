@@ -12,6 +12,10 @@ const client = new Client({
   port: 5432,
 });
 
+client.connect((err) => {
+  if (err) console.error('connection error:', err.stack);
+});
+
 /**
  * ===================================
  * Configurations and set up
@@ -36,10 +40,24 @@ app.set('view engine', 'handlebars');
  * ===================================
  */
 
-app.get('/', (req, res) => {
+app.get('/', (req, response) => {
   // query database for all pokemon
 
   // respond with HTML page displaying all pokemon
+  //
+  const queryString = 'SELECT * from pokemon'
+
+  client.query(queryString, (err, result) => {
+    if (err) {
+      console.error('query error:', err.stack);
+    } else {
+      console.log('query result:', result);
+
+      // redirect to home page
+      response.send( result.rows );
+    }
+  });
+
 });
 
 app.get('/new', (request, response) => {
@@ -54,20 +72,17 @@ app.post('/pokemon', (req, response) => {
   const queryString = 'INSERT INTO pokemon(name, height) VALUES($1, $2)'
   const values = [params.name, params.height];
 
-  client.connect((err) => {
-    if (err) console.error('connection error:', err.stack);
+  if (err) console.error('connection error:', err.stack);
 
-    client.query(queryString, values, (err, res) => {
-      if (err) {
-        console.error('query error:', err.stack);
-      } else {
-        console.log('query result:', res);
+  client.query(queryString, values, (err, res) => {
+    if (err) {
+      console.error('query error:', err.stack);
+    } else {
+      console.log('query result:', res);
 
-        // redirect to home page
-        response.redirect('/');
-      }
-      client.end();
-    });
+      // redirect to home page
+      response.redirect('/');
+    }
   });
 });
 
