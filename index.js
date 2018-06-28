@@ -11,7 +11,7 @@ const config = {
   port: 5432,
 });
 
-const pool = new pg.Pool(configs);
+const pool = new pg.Pool(config);
 
 pool.on('error', function (err) {
   console.log('idle client error', err.message, err.stack);
